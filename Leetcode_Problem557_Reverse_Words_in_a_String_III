@@ -1,0 +1,72 @@
+char * reverseWords(char * s){
+    int start = 0 , end = 0;
+    for( int i = 0 ; i < strlen(s) ; i++)
+    {
+        if((s[i] == 32 && i != 0) || i == strlen(s)-1)
+        {
+            if(s[i-1] != 32)
+            {
+                end = (i == strlen(s)-1) ? i : i-1;
+                while(start<end)
+                {
+                    char temp = s[start];
+                    s[start++] = s[end];
+                    s[end--] = temp;
+                }
+                start = i+1;
+            }
+        }
+    }
+    return s;
+}
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+char * reverseWords(char * s){
+    char* ans = (char*)malloc((strlen(s)+1)*sizeof(char));
+    int start = -1 , end , index = 0;
+    for( int i = 0 ; i < strlen(s) ; i++)
+    {
+        if(s[i] == 32 || (i == strlen(s)-1))
+        {
+            end = (i == strlen(s)-1) ? i : i-1;
+            while(start < end)
+                ans[index++] = s[end--];
+            start = i;
+            ans[index++] = (i == strlen(s)-1) ? '\0' : 32;
+        }
+    }
+    return ans;
+}
+
+
+
+-----------------------------------------------------------------------------------------
+
+
+
+void reverse(int l, int r, char* s){
+    for(int i = 0 ; i <= (r - l)/2 ; i++)
+    {
+        int tmp = s[l+i];
+        s[l+i] = s[r-i];
+        s[r-i] = tmp;
+    }
+}
+char * reverseWords(char * s){
+    int prev = 0;
+    for(int i = 0 ; i < strlen(s) ; i++)
+    {
+        if (s[i] == 32)
+        {
+            reverse(prev, i-1, s);
+            prev = i + 1;
+        }
+    }
+    reverse(prev, strlen(s)-1, s);
+    return s;
+}
